@@ -1,0 +1,32 @@
+<ion-toolbar color="success">
+  <ion-button color="light" fill="clear" (click)="rest.navCtrl.pop()">
+    <ion-icon name="chevron-back-outline"></ion-icon>
+  </ion-button>
+</ion-toolbar>
+
+<ion-content>
+  <p class="underline">
+    <b> Chỉ tiêu: </b>  {{rest.profile.data2.name}}
+  </p>
+  <p class="underline">
+    <b> Mô tả: </b> {{rest.profile.data2.intro}}
+  </p>
+  <p class="underline">
+    <b>Đơn vị:</b> {{rest.profile.data2.unit}}
+  </p>
+  <p class="underline">
+    <b>Trường giá trị:</b> {{rest.profile.data2.flag}}
+  </p>
+  <p class="underline">
+    <b>Trường hợp tăng:</b> {{rest.profile.data2.up}}
+  </p>
+  <p class="underline">
+    <b>Trường hợp giảm:</b> {{rest.profile.data2.down}}
+  </p>
+  <p class="underline">
+    <b>Các bệnh liên quan:</b> {{rest.profile.data2.disease}}
+  </p>
+  <p class="underline">
+    <b>Hướng điều trị:</b> {{rest.profile.data2.aim}}
+  </p>
+</ion-content>

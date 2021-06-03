@@ -1,0 +1,62 @@
+<ion-header>
+  <ion-toolbar color="success">
+    <ion-title style="text-align: center;">
+      THANHXUANPET
+    </ion-title>
+    <ion-buttons slot="secondary">
+      <ion-button (click)="rest.router.navigateByUrl('/setting')">
+        <ion-icon slot="end" name="settings-outline"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+
+    <ion-buttons slot="start">
+      <ion-img src="assets/image/logo.png" class="logo" (click)="this.rest.router.navigateByUrl('/home')"></ion-img>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <div>
+    <ion-card *ngFor="let item of rest.fivemin.list; let i = index">
+      <ion-card-content>
+        Kế hoạch ngày {{rest.timetodate(item.thoigian)}}
+        <div class="right">
+          <ion-button size="small" shape="round" color="secondary" (click)="detail(item.id)">
+            <ion-icon name="information-circle-outline"></ion-icon>
+          </ion-button>
+          <ion-button size="small" shape="round" color="secondary" (click)="preview(item.id)">
+            <ion-icon name="eye-outline"></ion-icon>
+          </ion-button>
+          <ion-button size="small" shape="round" color="danger" (click)="remove(item.id)">
+            <ion-icon name="trash-outline"></ion-icon>
+          </ion-button>
+        </div>
+      </ion-card-content>
+    </ion-card>
+  </div>
+  <ion-button expand="full" color="secondary" (click)="more()">
+    Xem thêm
+  </ion-button>
+</ion-content>
+
+<ion-toolbar>
+  <ion-tabs>
+    <ion-tab-bar>
+      <ion-tab-button (click)="rest.navCtrl.pop()">
+        <ion-icon name="arrow-back-outline"></ion-icon>
+        <ion-label> Trở về </ion-label>
+      </ion-tab-button>
+
+      <ion-tab-button (click)="insert()">
+        <ion-icon name="add-circle-outline"></ion-icon>
+        <ion-label> Thêm </ion-label>
+      </ion-tab-button>
+
+      <ion-tab-button *ngIf="rest.config.kaizen > 1" (click)="static()">
+        <ion-icon name="bar-chart-outline"></ion-icon>
+        <ion-label> Thống kê </ion-label>
+      </ion-tab-button>
+
+    </ion-tab-bar>
+  </ion-tabs>
+</ion-toolbar>

@@ -1,0 +1,99 @@
+<ion-toolbar color="success">
+  <ion-button color="light" fill="clear" (click)="rest.navCtrl.pop()">
+    <ion-icon name="chevron-back-outline"></ion-icon>
+  </ion-button>
+  <ion-button slot="end" (click)="insert()" color="light" fill="clear">
+    Thêm
+  </ion-button>
+</ion-toolbar>
+
+<ion-content>
+  <ion-item (click)="suggest()">
+    <ion-label position="stacked"> Số điện thoại </ion-label>
+    <ion-input [(ngModel)]="phone">  </ion-input>
+  </ion-item>
+  <ion-item>
+    <ion-label position="stacked"> Tên chủ </ion-label>
+    <ion-input [(ngModel)]="customer">  </ion-input>
+  </ion-item>
+  <ion-item>
+    <ion-label position="stacked"> Địa chỉ </ion-label>
+    <ion-input [(ngModel)]="address">  </ion-input>
+  </ion-item>
+  <ion-item>
+    <ion-label position="stacked"> Tên thú cưng </ion-label>
+    <ion-input [(ngModel)]="name">  </ion-input>
+  </ion-item>
+  <ion-item>
+    <ion-label position="stacked"> Trọng lượng </ion-label>
+    <ion-input type="number" [(ngModel)]="weight">  </ion-input>
+  </ion-item>
+  <ion-item>
+    <ion-label position="stacked"> Tuổi </ion-label>
+    <ion-input type="number" [(ngModel)]="age">  </ion-input>
+  </ion-item>
+  <ion-item>
+    <ion-label position="stacked"> Giới tính </ion-label>
+    <ion-select [(ngModel)]="gender">
+      <ion-select-option value="0">
+        Đực
+      </ion-select-option>
+      <ion-select-option value="1">
+        Cái
+      </ion-select-option>
+    </ion-select>
+  </ion-item>
+  <ion-item>
+    <ion-label position="stacked"> Loài động vật </ion-label>
+    <ion-select [(ngModel)]="type">
+      <ion-select-option *ngFor="let type of rest.profile.type" [value]="type.id">
+        {{type.name}}
+      </ion-select-option>
+    </ion-select>
+    <ion-button slot="end" (click)="insertSelect('type')">
+      <ion-icon name="add-circle-outline"></ion-icon>
+    </ion-button>
+  </ion-item>
+  <ion-item>
+    <ion-label position="stacked"> Số Serial </ion-label>
+    <ion-input type="number" [(ngModel)]="serial">  </ion-input>
+  </ion-item>
+  <ion-item>
+    <ion-label position="stacked"> Loại mẫu </ion-label>
+    <ion-select [(ngModel)]="sampletype">
+      <ion-select-option *ngFor="let type of rest.profile.sampletype" [value]="type.id">
+        {{type.name}}
+      </ion-select-option>
+    </ion-select>
+    <ion-button slot="end" (click)="insertSelect('sampletype')">
+      <ion-icon name="add-circle-outline"></ion-icon>
+    </ion-button>
+  </ion-item>
+  <ion-item>
+    <ion-label position="stacked"> Số mẫu </ion-label>
+    <ion-input type="number" [(ngModel)]="samplenumber">  </ion-input>
+  </ion-item>
+  <ion-item>
+    <ion-label position="stacked"> Ký hiệu mẫu </ion-label>
+    <ion-input [(ngModel)]="samplesymbol">  </ion-input>
+  </ion-item>
+  <ion-item>
+    <ion-label position="stacked"> Tình trạng mẫu </ion-label>
+    <ion-select [(ngModel)]="samplestatus">
+      <ion-select-option value="1">
+        Đạt
+      </ion-select-option>
+      <ion-select-option value="0">
+        Không đạt
+      </ion-select-option>
+    </ion-select>
+  </ion-item>
+  <ion-item>
+    <ion-label position="stacked"> Triệu chứng </ion-label>
+    <ion-input type="number" [(ngModel)]="symptom">  </ion-input>
+  </ion-item>
+  <ion-item *ngFor="let item of rest.profile.target">
+    <ion-label position="stacked"> Chỉ tiêu {{item.name}} </ion-label>
+    <ion-input type="number" [(ngModel)]="target[item.id]"></ion-input>
+  </ion-item>
+</ion-content>
