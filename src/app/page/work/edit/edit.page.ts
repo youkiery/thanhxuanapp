@@ -1,7 +1,6 @@
 import { Component, ElementRef, ViewChild } from '@angular/core';
 import { ModalController } from '@ionic/angular';
 import { RestService } from 'src/app/services/rest.service';
-import { AngularFireStorage, AngularFireUploadTask } from '@angular/fire/storage';
 import { Observable } from 'rxjs';
 
 @Component({
@@ -11,7 +10,6 @@ import { Observable } from 'rxjs';
 })
 export class EditPage {
   public files: any
-  task: AngularFireUploadTask;
   // Progress in percentage
   percentage: Observable<number>;
   // Snapshot of uploading file
@@ -21,7 +19,6 @@ export class EditPage {
   constructor(
     public rest: RestService,
     public modal: ModalController,
-    private storage: AngularFireStorage,
   ) { }
 
   public dismiss() {
@@ -202,20 +199,20 @@ export class EditPage {
 
   public uploadImage(image: string) {
     return new Promise((resolve) => {
-      const path = 'images/' + new Date().getTime() + '.jpg';
-      let fileRef = this.storage.ref(path);
-      let base64 = image.substr(image.indexOf(',') + 1);
-      let metadata = {
-        contentType: 'image/jpeg',
-      };
+      // const path = 'images/' + new Date().getTime() + '.jpg';
+      // let fileRef = this.storage.ref(path);
+      // let base64 = image.substr(image.indexOf(',') + 1);
+      // let metadata = {
+      //   contentType: 'image/jpeg',
+      // };
 
-      fileRef.putString(base64, 'base64', metadata).then((response) => {
-        fileRef.getDownloadURL().subscribe(url => {
-          resolve(url)
-        })
-      }, (error) => {
-        resolve(0)
-      })
+      // fileRef.putString(base64, 'base64', metadata).then((response) => {
+      //   fileRef.getDownloadURL().subscribe(url => {
+      //     resolve(url)
+      //   })
+      // }, (error) => {
+      //   resolve(0)
+      // })
     })
   }
 }
