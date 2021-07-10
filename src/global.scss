@@ -26,15 +26,22 @@
 @import "~@ionic/angular/css/flex-utils.css";
 
 ion-input, ion-textarea, ion-datetime, textarea.alert-input {
-  border-radius: 10px !important;
+  border-radius: 20px !important;
   --padding-start: 8px !important;
   --padding-end: 8px !important;
   font-size: 0.9em;
-  border: 1px solid gray !important;
+  border: 1px solid lightgray !important;
   background: white !important;
   margin-top: 6px !important;
   margin-bottom: 3px !important;
 }
+
+ion-item {
+  --border-color: var(--ion-item-border-color, var(--ion-border-color, var(--ion-color-step-150, rgba(255, 255, 255, 0.13))));
+  --highlight-color-valid: none;
+}
+
+
 
 .text-center {
   text-align: center;

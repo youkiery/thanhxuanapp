@@ -24,24 +24,24 @@ export class WorkPage implements OnInit {
 
   ionViewDidEnter() {
     this.rest.freeze('Đang lấy dữ liệu...')
-    this.rest.work.page = {
+    this.rest.temp.page = {
       'undone': 1,
       'done': 1
     }
 
     this.rest.check({
       action: 'work-init',
-      time: this.rest.work['time'],
-      startdate: this.rest.totime(this.rest.work.filter.startdate),
-      endate: this.rest.totime(this.rest.work.filter['enddate']),
-      keyword: this.rest.work.filter['keyword'],
-      user: this.rest.work.filter['user'].join(','),
-      page1: this.rest.work.page.undone,
-      page2: this.rest.work.page.done,
+      time: this.rest.temp['time'],
+      startdate: this.rest.totime(this.rest.temp.filter.startdate),
+      endate: this.rest.totime(this.rest.temp.filter['enddate']),
+      keyword: this.rest.temp.filter['keyword'],
+      user: this.rest.temp.filter['user'].join(','),
+      page1: this.rest.temp.page.undone,
+      page2: this.rest.temp.page.done,
     }).then(data => {
-      this.rest.work.init = 1
-      this.rest.work.unread = data.unread
-      this.rest.work.data = data.list
+      this.rest.temp.init = 1
+      this.rest.temp.unread = data.unread
+      this.rest.temp.data = data.list
       this.rest.defreeze()
     }, (error) => { 
       this.rest.defreeze()
@@ -52,16 +52,16 @@ export class WorkPage implements OnInit {
     return new Promise(resolve => {
       this.rest.check({
         action: 'work-auto',
-        time: this.rest.work['time'],
-        startdate: this.rest.totime(this.rest.work.filter.startdate),
-        endate: this.rest.totime(this.rest.work.filter['enddate']),
-        keyword: this.rest.work.filter['keyword'],
-        user: this.rest.work.filter['user'].join(','),
-        page: this.rest.work.page[this.rest.work.segment],
-        status: this.rest.work.reversal[this.rest.work.segment]
+        time: this.rest.temp['time'],
+        startdate: this.rest.totime(this.rest.temp.filter.startdate),
+        endate: this.rest.totime(this.rest.temp.filter['enddate']),
+        keyword: this.rest.temp.filter['keyword'],
+        user: this.rest.temp.filter['user'].join(','),
+        page: this.rest.temp.page[this.rest.temp.segment],
+        status: this.rest.temp.reversal[this.rest.temp.segment]
       }).then(response => {
-        this.rest.work.unread = response['unread']
-        if (response.list.length) this.rest.work.data[this.rest.work.segment] = this.rest.work.data[this.rest.work.segment].concat(response.list)
+        this.rest.temp.unread = response['unread']
+        if (response.list.length) this.rest.temp.data[this.rest.temp.segment] = this.rest.temp.data[this.rest.temp.segment].concat(response.list)
         resolve('')
       }, (error) => { 
         resolve('')
@@ -75,11 +75,11 @@ export class WorkPage implements OnInit {
       const modal = await this.modal.create({
         component: PrintPage,
         componentProps: {
-          startdate: this.rest.totime(this.rest.work.filter['startdate']),
-          enddate: this.rest.totime(this.rest.work.filter['enddate']),
-          keyword: this.rest.work.filter['keyword'],
-          user: this.rest.work.filter['user'],
-          page: this.rest.work.page[this.rest.work.segment]
+          startdate: this.rest.totime(this.rest.temp.filter['startdate']),
+          enddate: this.rest.totime(this.rest.temp.filter['enddate']),
+          keyword: this.rest.temp.filter['keyword'],
+          user: this.rest.temp.filter['user'],
+          page: this.rest.temp.page[this.rest.temp.segment]
         }
       })
       modal.present()
@@ -88,17 +88,17 @@ export class WorkPage implements OnInit {
 
   public async detail(id: number) {
     await this.rest.freeze('Getting data')
-    let current = this.rest.work.data.undone.filter((item) => {
+    let current = this.rest.temp.data.undone.filter((item) => {
       return item['id'] == id
     })
     if (!current.length) {
-      current = this.rest.work.data.done.filter((item) => {
+      current = this.rest.temp.data.done.filter((item) => {
         return item['id'] == id
       })
     }
 
     current = current[0]
-    this.rest.work.edit = {
+    this.rest.temp.edit = {
       'id': current['id'],
       'content': current['content'],
       'note': current['note'],
@@ -141,18 +141,18 @@ export class WorkPage implements OnInit {
     await this.rest.freeze('Đang hoàn thành')
     this.rest.check({
       action: 'work-done',
-      startdate: this.rest.totime(this.rest.work.filter['startdate']),
-      enddate: this.rest.totime(this.rest.work.filter['enddate']),
-      keyword: this.rest.work.filter['keyword'],
-      user: this.rest.work.filter['user'],
-      page1: this.rest.work.page.undone,
-      page2: this.rest.work.page.done,
+      startdate: this.rest.totime(this.rest.temp.filter['startdate']),
+      enddate: this.rest.totime(this.rest.temp.filter['enddate']),
+      keyword: this.rest.temp.filter['keyword'],
+      user: this.rest.temp.filter['user'],
+      page1: this.rest.temp.page.undone,
+      page2: this.rest.temp.page.done,
       id: this.id,
-      status: this.rest.work.reversal[this.rest.work.segment]
+      status: this.rest.temp.reversal[this.rest.temp.segment]
     }).then((data) => {
-      this.rest.work.unread = data['unread']
-      this.rest.work['time'] = data['time']
-      this.rest.work.data = data['list']
+      this.rest.temp.unread = data['unread']
+      this.rest.temp['time'] = data['time']
+      this.rest.temp.data = data['list']
       this.rest.defreeze()
     }, (error) => {
       this.rest.defreeze()
@@ -186,18 +186,18 @@ export class WorkPage implements OnInit {
     await this.rest.freeze('Đang xóa công việc')
     this.rest.check({
       action: 'work-remove',
-      startdate: this.rest.totime(this.rest.work.filter['startdate']),
-      enddate: this.rest.totime(this.rest.work.filter['enddate']),
-      keyword: this.rest.work.filter['keyword'],
-      user: this.rest.work.filter['user'],
-      page1: this.rest.work.page.undone,
-      page2: this.rest.work.page.done,
+      startdate: this.rest.totime(this.rest.temp.filter['startdate']),
+      enddate: this.rest.totime(this.rest.temp.filter['enddate']),
+      keyword: this.rest.temp.filter['keyword'],
+      user: this.rest.temp.filter['user'],
+      page1: this.rest.temp.page.undone,
+      page2: this.rest.temp.page.done,
       id: this.id,
-      status: this.rest.work.reversal[this.rest.work.segment]
+      status: this.rest.temp.reversal[this.rest.temp.segment]
     }).then((data) => {
-      this.rest.work.unread = data['unread']
-      this.rest.work['time'] = data['time']
-      this.rest.work.data = data['list']
+      this.rest.temp.unread = data['unread']
+      this.rest.temp['time'] = data['time']
+      this.rest.temp.data = data['list']
       this.rest.defreeze()
     }, (error) => {
       this.rest.defreeze()
@@ -210,11 +210,11 @@ export class WorkPage implements OnInit {
       const modal = await this.modal.create({
         component: FilterPage,
         componentProps: {
-          startdate: this.rest.totime(this.rest.work.filter['startdate']),
-          enddate: this.rest.totime(this.rest.work.filter['enddate']),
-          keyword: this.rest.work.filter['keyword'],
-          user: this.rest.work.filter['user'],
-          'page': this.rest.work.page[this.rest.work.segment]
+          startdate: this.rest.totime(this.rest.temp.filter['startdate']),
+          enddate: this.rest.totime(this.rest.temp.filter['enddate']),
+          keyword: this.rest.temp.filter['keyword'],
+          user: this.rest.temp.filter['user'],
+          'page': this.rest.temp.page[this.rest.temp.segment]
         }
       })
       await modal.present()
@@ -232,9 +232,9 @@ export class WorkPage implements OnInit {
   }
 
   public async edit(index: number) {
-    let current = this.rest.work.data[this.rest.work['segment']][index]
+    let current = this.rest.temp.data[this.rest.temp['segment']][index]
     
-    this.rest.work.edit = {
+    this.rest.temp.edit = {
       'id': current['id'],
       'content': current['content'],
       'note': current['note'],
@@ -253,7 +253,7 @@ export class WorkPage implements OnInit {
   }
 
   public loadData(event: any) {
-    this.rest.work.page[this.rest.work.segment] ++
+    this.rest.temp.page[this.rest.temp.segment] ++
     
     this.filter().then(() => {
       event.target.complete()

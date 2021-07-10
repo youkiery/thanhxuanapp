@@ -27,7 +27,7 @@ export class InsertPage {
     // console.log(this.rest.today);
     this.time.cometime = this.rest.today
     this.time.calltime = this.rest.today
-    this.userid = this.rest.list.employ[0]['userid']
+    this.userid = this.rest.config.user[0]['userid']
   }
 
   public datepicker(name: string) {
@@ -42,20 +42,20 @@ export class InsertPage {
       await this.rest.freeze('Đang thêm công việc')
       this.rest.check({
         action: 'work-insert',
-        startdate: this.rest.totime(this.rest.work.filter['startdate']),
-        enddate: this.rest.totime(this.rest.work.filter['enddate']),
-        keyword: this.rest.work.filter['keyword'],
-        page1: this.rest.work.page.undone,
-        page2: this.rest.work.page.done,
-        user: this.rest.work.filter['user'],
+        startdate: this.rest.totime(this.rest.temp.filter['startdate']),
+        enddate: this.rest.totime(this.rest.temp.filter['enddate']),
+        keyword: this.rest.temp.filter['keyword'],
+        page1: this.rest.temp.page.undone,
+        page2: this.rest.temp.page.done,
+        user: this.rest.temp.filter['user'],
         employ: this.userid,
         content: this.content,
         cometime: this.time.cometime,
         calltime: this.time.calltime,
-        status: this.rest.work.reversal[this.rest.work.segment]
+        status: this.rest.temp.reversal[this.rest.temp.segment]
       }).then(data => {
-        this.rest.work.unread = data['unread']
-        this.rest.work.data = data['list']
+        this.rest.temp.unread = data['unread']
+        this.rest.temp.data = data['list']
         this.rest.defreeze()
         this.dismiss()
       }, (error) => {

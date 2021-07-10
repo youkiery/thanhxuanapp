@@ -27,7 +27,7 @@ export class EditPage {
 
   ionViewDidEnter() {
     this.listenerInputChange();
-    // console.log(this.rest.work.edit);
+    // console.log(this.rest.temp.edit);
   }
 
   private listenerInputChange() {
@@ -68,7 +68,7 @@ export class EditPage {
               canvas.height = image.height * ratio;
               context.drawImage(image, 0, 0, canvas.width, canvas.height);
 
-              this.rest.work.edit.image.push(canvas.toDataURL("image/jpeg"))
+              this.rest.temp.edit.image.push(canvas.toDataURL("image/jpeg"))
             })
           };
         }
@@ -78,31 +78,31 @@ export class EditPage {
   }
 
   public remove(index: number) {
-    this.rest.work.edit.image = this.rest.work.edit.image.filter((item, item_index) => {
+    this.rest.temp.edit.image = this.rest.temp.edit.image.filter((item, item_index) => {
       return index !== item_index
     })
   }
 
   // public save() {
-  //     this.rest.work.edit.process = Number(this.rest.work.edit.process)
-  //     if (!this.rest.work.edit.process || this.rest.work.edit.process < 0 || this.rest.work.edit.process > 100) this.rest.work.edit.process = 0
+  //     this.rest.temp.edit.process = Number(this.rest.temp.edit.process)
+  //     if (!this.rest.temp.edit.process || this.rest.temp.edit.process < 0 || this.rest.temp.edit.process > 100) this.rest.temp.edit.process = 0
   //     await this.rest.freeze()
   //     this.rest.check({
   //       action: 'work-save',
-  //       startdate: this.rest.totime(this.rest.work.filter['startdate']),
-  //       enddate: this.rest.totime(this.rest.work.filter['enddate']),
-  //       keyword: this.rest.work.filter['keyword'],
-  //       user: this.rest.work.filter['user'],
-  //       id: this.rest.work.edit.id,
-  //       content: this.rest.work.edit.content,
-  //       process: this.rest.work.edit.process,
-  //       calltime: this.rest.totime(this.rest.work.edit.calltime),
-  //       note: this.rest.work.edit.note
+  //       startdate: this.rest.totime(this.rest.filter.work['startdate']),
+  //       enddate: this.rest.totime(this.rest.filter.work['enddate']),
+  //       keyword: this.rest.filter.work['keyword'],
+  //       user: this.rest.filter.work['user'],
+  //       id: this.rest.temp.edit.id,
+  //       content: this.rest.temp.edit.content,
+  //       process: this.rest.temp.edit.process,
+  //       calltime: this.rest.totime(this.rest.temp.edit.calltime),
+  //       note: this.rest.temp.edit.note
   //     }).then(data => {
-  //       this.rest.work.unread = data['unread']
+  //       this.rest.temp.unread = data['unread']
   //       this.work['time'] = data['time']
   //       this.work['data'] = data['data']
-  //       this.rest.workParse()
+  //       this.rest.tempParse()
   //       this.rest.defreeze()
   //       this.dismiss()
   //     }, (error) => { })
@@ -114,13 +114,13 @@ export class EditPage {
 
     await this.rest.freeze('Kiểm tra hình ảnh')
     new Promise(resolve => {
-      if (!this.rest.work.edit.image.length) {
+      if (!this.rest.temp.edit.image.length) {
         this.rest.defreeze()
         resolve('')
       }
       else {
-        // console.log(this.rest.work.edit.image.length);
-        this.rest.work.edit.image.forEach((item) => {
+        // console.log(this.rest.temp.edit.image.length);
+        this.rest.temp.edit.image.forEach((item) => {
           // check if base64 data
           if (item.length) {
             check++
@@ -163,9 +163,9 @@ export class EditPage {
       }
     }).then((data) => {
       // return 0 if overrange process (0 - 100)
-      this.rest.work.edit.process = Number(this.rest.work.edit.process)
-      let checker = !this.rest.work.edit.process || this.rest.work.edit.process < 0 || this.rest.work.edit.process > 100
-      if (checker) this.rest.work.edit.process = 0
+      this.rest.temp.edit.process = Number(this.rest.temp.edit.process)
+      let checker = !this.rest.temp.edit.process || this.rest.temp.edit.process < 0 || this.rest.temp.edit.process > 100
+      if (checker) this.rest.temp.edit.process = 0
       this.saveSubmit(list)
     })
   }
@@ -174,22 +174,22 @@ export class EditPage {
     await this.rest.freeze('Đang cập nhật...')
     this.rest.check({
       action: 'work-save',
-      startdate: this.rest.totime(this.rest.work.filter['startdate']),
-      enddate: this.rest.totime(this.rest.work.filter['enddate']),
-      keyword: this.rest.work.filter['keyword'],
-      user: this.rest.work.filter['user'],
-      id: this.rest.work.edit.id,
-      content: this.rest.work.edit.content,
-      process: this.rest.work.edit.process,
-      calltime: this.rest.totime(this.rest.work.edit.calltime),
-      note: this.rest.work.edit.note,
-      page1: this.rest.work.page.undone,
-      page2: this.rest.work.page.done,
+      startdate: this.rest.totime(this.rest.filter.work['startdate']),
+      enddate: this.rest.totime(this.rest.filter.work['enddate']),
+      keyword: this.rest.filter.work['keyword'],
+      user: this.rest.filter.work['user'],
+      id: this.rest.temp.edit.id,
+      content: this.rest.temp.edit.content,
+      process: this.rest.temp.edit.process,
+      calltime: this.rest.totime(this.rest.temp.edit.calltime),
+      note: this.rest.temp.edit.note,
+      page1: this.rest.temp.page.undone,
+      page2: this.rest.temp.page.done,
       image: list.join(','),
-      status: this.rest.work.reversal[this.rest.work.segment]
+      status: this.rest.temp.reversal[this.rest.temp.segment]
     }).then(data => {
-      this.rest.work.unread = data['unread']
-      this.rest.work.data = data['list']
+      this.rest.temp.unread = data['unread']
+      this.rest.temp.data = data['list']
       this.rest.defreeze()
       this.dismiss()
     }, (error) => {

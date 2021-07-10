@@ -17,9 +17,11 @@ export class RestService {
 
   }
   public config = {
-    userid: 1,
+    userid: 0,
     permission: {
-      work: 0, kaizen: 0, schedule: 0, vaccine: 0, spa: 0, expire: 0, blood: 0, usg: 0, drug: 0, target: 0, profile: 0
+      work: 0, kaizen: 0, schedule: 0, vaccine: 0,
+      spa: 0, expire: 0, blood: 0, usg: 0,
+      drug: 0, target: 0, profile: 0
     },
     user: [],
     except: [],
@@ -32,9 +34,16 @@ export class RestService {
     }
   }
   public list = {
-    work: [], kaizen: [], schedule: [], vaccine: [], spa: [], expire: [], blood: [], usg: [], drug: [], target: [], profile: []
+    work: [], kaizen: [], schedule: [], vaccine: [],
+    spa: [], expire: [], blood: [], usg: [],
+    drug: [], target: [], profile: []
   }
-  public temp = {}
+  public filter = {
+    work: {}, kaizen: {}, schedule: {}, vaccine: {},
+    spa: {}, expire: {}, blood: {}, usg: {},
+    drug: {}, target: {}, profile: {}
+  }
+  public temp: any = {}
   // public fivemin = {
   //   image: [''],
   //   index: 0,
@@ -494,42 +503,6 @@ export class RestService {
       username: username,
       password: password,
     }).then((data) => {
-      // this.work.unread = data['work']
-      // this.kaizen.unread = data['kaizen']
-      // this.vaccine.disease = data['disease']
-      // this.spa.type = data.type
-      
-      // // this.config = data.config
-      // this.ride.clock = data.clock
-      // this.list.employ = data['employ']
-      // this.list.except = data['except']
-      // this.today = data['today']
-      // this.spa.current = this.parseDate(data['today'])
-      // this.ride.current = this.parseDate(data['today'])
-      // for (const key in data['config']) {
-      //   if (Object.prototype.hasOwnProperty.call(data['config'], key)) {
-      //     this.config[key] = Number(data['config'][key])
-      //   }
-      // }
-      // this.admin.type = Number(data['admin'])
-
-      // this.work.filter.enddate = this.todate(data['nextweek'])
-      // this.schedule.filter.time = this.datetotime(this.today)
-
-      // this.blood.number = data.number
-      // this.blood.total = data.total
-
-      // this.profile.serial = Number(data.serial)
-      // this.profile.type = data.type
-      // this.profile.sampletype = data.sampletype
-      // this.profile.target = data.target
-
-      // this.user = {
-      //   userid: data['userid'],
-      //   name: data['name'],
-      //   username: data['username'],
-      //   password: data['password']
-      // }
       this.storage.set('userdata', {
         username: username,
         password: password

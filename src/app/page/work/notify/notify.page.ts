@@ -20,8 +20,8 @@ export class NotifyPage implements OnInit {
     this.rest.check({
       action: 'work-notify'
     }).then(data => {
-      this.rest.work.notify = data.notify
-      this.rest.work.unread = 0
+      this.rest.temp.notify = data.notify
+      this.rest.temp.unread = 0
       this.rest.defreeze()
     }, () => {
       this.rest.defreeze()
@@ -31,11 +31,11 @@ export class NotifyPage implements OnInit {
   ngOnInit() { }
 
   public async detail(id: number) {
-    let current = this.rest.work.data.done.filter((item) => {
+    let current = this.rest.temp.data.done.filter((item) => {
       return item['id'] === id
     })
     if (!current) {
-      current = this.rest.work.data.undone.filter((item) => {
+      current = this.rest.temp.data.undone.filter((item) => {
         return item['id'] === id
       })
     }
@@ -43,7 +43,7 @@ export class NotifyPage implements OnInit {
     current = current[0]
     if (!current) this.rest.notify('Công việc đã xóa')
     else {
-      this.rest.work.edit = {
+      this.rest.temp.edit = {
         'id': current['id'],
         'content': current['content'],
         'note': current['note'],
